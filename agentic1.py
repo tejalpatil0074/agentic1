@@ -11,33 +11,21 @@ st.set_page_config(
 )
 
 # ---------------- OPENAI HELPER ----------------
-def call_openai(prompt, api_key):
-    api_key = os.getenv("OPENAI_API_KEY")
-    client = openai.OpenAI(api_key=api_key)
-    api_key = st.sidebar.text_input("Enter your OpenAI API key", type="password")
+import openai
 
-if api_key:
+def generate_text(prompt, api_key):
     client = openai.OpenAI(api_key=api_key)
-    st.success("API key set! You can generate content now.")
-else:
-    st.warning("Please enter your OpenAI API key.")
-
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": "You are a senior enterprise solution architect writing professional Statements of Work."
-            },
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ],
-        temperature=0.4
+        model="gpt-4",
+        messages=[{"role": "user", "content": prompt}]
     )
+    return response.choices[0].message.content.strip()  # ✅ inside function
 
-    return response.choices[0].message.content.strip()
+# Usage
+api_key = "YOUR_OPENAI_KEY"
+output = generate_text("Write a one-line SOW objective.", api_key)
+print(output)
+
 
 # ---------------- SESSION STATE ----------------
 if "sow" not in st.session_state:
@@ -208,6 +196,7 @@ with tabs[2]:
             file_name="Statement_of_Work.doc",
             mime="application/msword"
         )
+
 
 
 
