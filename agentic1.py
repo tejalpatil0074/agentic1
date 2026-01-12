@@ -1,6 +1,7 @@
 import streamlit as st
 from openai import OpenAI
 from datetime import datetime
+import os 
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
@@ -11,7 +12,8 @@ st.set_page_config(
 
 # ---------------- OPENAI HELPER ----------------
 def call_openai(prompt, api_key):
-    client = OpenAI(api_key=api_key)
+    api_key = os.getenv("OPENAI_API_KEY")
+    client = openai.OpenAI(api_key=api_key)
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -199,3 +201,4 @@ with tabs[2]:
             file_name="Statement_of_Work.doc",
             mime="application/msword"
         )
+
