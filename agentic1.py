@@ -14,6 +14,13 @@ st.set_page_config(
 def call_openai(prompt, api_key):
     api_key = os.getenv("OPENAI_API_KEY")
     client = openai.OpenAI(api_key=api_key)
+    api_key = st.sidebar.text_input("Enter your OpenAI API key", type="password")
+
+if api_key:
+    client = openai.OpenAI(api_key=api_key)
+    st.success("API key set! You can generate content now.")
+else:
+    st.warning("Please enter your OpenAI API key.")
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -201,4 +208,5 @@ with tabs[2]:
             file_name="Statement_of_Work.doc",
             mime="application/msword"
         )
+
 
