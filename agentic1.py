@@ -13,17 +13,17 @@ st.set_page_config(
 # ---------------- OPENAI HELPER ----------------
 import openai
 
-def generate_text(prompt, api_key):
-    client = openai.OpenAI(api_key=api_key)
-    response = client.chat.completions.create(
-        model="gpt-4",
-        messages=[{"role": "user", "content": prompt}]
-    )
-    return response.choices[0].message.content.strip()  # ✅ inside function
+def generate_text(prompt):
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# Usage
-api_key = "YOUR_OPENAI_KEY"
-output = generate_text("Write a one-line SOW objective.", api_key)
+    response = client.responses.create(
+        model="gpt-4.1-mini",
+        input=prompt
+    )
+
+    return response.output_text
+
+output = generate_text("Write a one-line SOW objective.")
 print(output)
 
 
@@ -196,6 +196,7 @@ with tabs[2]:
             file_name="Statement_of_Work.doc",
             mime="application/msword"
         )
+
 
 
 
