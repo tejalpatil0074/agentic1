@@ -11,18 +11,17 @@ st.set_page_config(
 )
 
 # ---------------- OPENAI HELPER ----------------
-import openai
 
-openai.api_key = "YOUR_API_KEY"
 
-response = openai.ChatCompletion.create(
-    model="gpt-4",
-    messages=[
-        {"role": "user", "content": "Write a one-line SOW objective."}
-    ]
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+response = client.responses.create(
+    model="gpt-4.1-mini",
+    input="Write a one-line SOW objective."
 )
 
-print(response.choices[0].message["content"])
+print(response.output_text)
+
 
 
 # ---------------- SESSION STATE ----------------
@@ -194,6 +193,7 @@ with tabs[2]:
             file_name="Statement_of_Work.doc",
             mime="application/msword"
         )
+
 
 
 
