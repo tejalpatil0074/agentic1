@@ -11,16 +11,25 @@ st.set_page_config(
 )
 
 # ---------------- OPENAI HELPER ----------------
+def call_openai(prompt, api_key):
+    client = OpenAI(api_key=api_key)
 
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a senior enterprise solution architect writing professional Statements of Work."
+            },
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ],
+        temperature=0.4
+    )
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
-response = client.responses.create(
-    model="gpt-4.1-mini",
-    input="Write a one-line SOW objective."
-)
-
-print(response.output_text)
+    return response.choices[0].message.content.strip()
 
 
 
@@ -193,6 +202,7 @@ with tabs[2]:
             file_name="Statement_of_Work.doc",
             mime="application/msword"
         )
+
 
 
 
