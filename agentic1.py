@@ -54,13 +54,13 @@ if "customer_logo" not in st.session_state:
 with st.sidebar:
     st.header("⚙️ Configuration")
 
-    # For Streamlit Cloud use secrets
-    openai_api_key = st.secrets.get("OPENAI_API_KEY", "")
+# For Streamlit Cloud use secrets
+openai_api_key = st.secrets.get("OPENAI_API_KEY", "")
 
-    if not openai_api_key:
-        st.warning("OpenAI API key not configured in Secrets")
-    else:
-        st.success("OpenAI API key loaded")
+if not openai_api_key:
+    st.warning("OpenAI API key not configured in Secrets")
+else:
+    st.success("OpenAI API key loaded")
 
  # ===== ADDED: CUSTOMER LOGO UPLOAD =====
     st.subheader("🏷 Branding")
@@ -70,8 +70,8 @@ with st.sidebar:
         type=["png", "jpg", "jpeg"]
     )
 
-    if customer_logo:
-        st.image(customer_logo, width=150)
+if customer_logo:
+    st.image(customer_logo, width=150)
 
 
 # ---------------- MAIN UI ----------------
@@ -139,13 +139,13 @@ if industry == "Other (Specify)":
 
     customer = st.text_input("Customer Name", "Acme Corp")
 
-    if st.button("✨ Generate SOW Content"):
-        if not openai_api_key:
-            st.error("OpenAI API key missing")
-        else:
-            with st.spinner("Generating content..."):
+if st.button("✨ Generate SOW Content"):
+    if not openai_api_key:
+        st.error("OpenAI API key missing")
+    else:
+        with st.spinner("Generating content..."):
  # ===== ADDED =====
-                 st.session_state.customer_logo = customer_logo
+st.session_state.customer_logo = customer_logo
 
                 objective_prompt = f"""
 Write EXACTLY 2 concise professional business sentences
@@ -316,6 +316,7 @@ with tabs[2]:
             file_name="Statement_of_Work.doc",
             mime="application/msword"
         )
+
 
 
 
