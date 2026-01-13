@@ -144,29 +144,29 @@ if st.button("✨ Generate SOW Content"):
         st.error("OpenAI API key missing")
     else:
         with st.spinner("Generating content..."):
-            
- # ===== ADDED =====
-st.session_state.customer_logo = customer_logo
 
-                objective_prompt = f"""
+    # save customer logo
+    st.session_state.customer_logo = customer_logo
+
+    objective_prompt = f"""
 Write EXACTLY 2 concise professional business sentences
 for a Statement of Work objective.
 
-Solution: {sol_type}
-Industry: {industry}
+Solution: {final_solution}
+Industry: {final_industry}
 Customer: {customer}
 
 Focus on business outcomes and measurable value.
 """
 
-                stakeholders_prompt = f"""
+    stakeholders_prompt = f"""
 List EXACTLY 4 stakeholders in this format:
 Name – Role – Organization
 
-Context: {sol_type} project for {customer}
+Context: {final_solution} project for {customer}
 """
 
-                assumptions_prompt = f"""
+    assumptions_prompt = f"""
 Provide:
 Assumptions:
 - 5 bullet points
@@ -177,7 +177,7 @@ Dependencies:
 Context: Enterprise AI implementation
 """
 
-                timeline_prompt = f"""
+    timeline_prompt = f"""
 Create a delivery timeline table.
 
 Format:
@@ -186,17 +186,19 @@ Phase | Key Activities | Duration
 Provide EXACTLY 4 phases.
 """
 
-                st.session_state.sow = {
-                    "solution": sol_type,
-                    "industry": industry,
-                    "customer": customer,
-                    "objective": call_openai(objective_prompt, openai_api_key),
-                    "stakeholders": call_openai(stakeholders_prompt, openai_api_key),
-                    "assumptions": call_openai(assumptions_prompt, openai_api_key),
-                    "timeline": call_openai(timeline_prompt, openai_api_key),
-                }
+    st.session_state.sow = {
+        "solution": final_solution,
+        "industry": final_industry,
+        "customer": customer,
+        "objective": call_openai(objective_prompt, openai_api_key),
+        "stakeholders": call_openai(stakeholders_prompt, openai_api_key),
+        "assumptions": call_openai(assumptions_prompt, openai_api_key),
+        "timeline": call_openai(timeline_prompt, openai_api_key),
+    }
 
-                st.success("Content generated successfully!")
+    st.success("Content generated successfully!")
+
+             
 
 # ================= TAB 2: EDIT & REVIEW =================
 with tabs[1]:
@@ -317,6 +319,7 @@ with tabs[2]:
             file_name="Statement_of_Work.doc",
             mime="application/msword"
         )
+
 
 
 
