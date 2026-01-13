@@ -13,18 +13,16 @@ st.set_page_config(
 # ---------------- OPENAI HELPER ----------------
 import openai
 
-def generate_text(prompt):
-    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+openai.api_key = "YOUR_API_KEY"
 
-    response = client.responses.create(
-        model="gpt-4.1-mini",
-        input=prompt
-    )
+response = openai.ChatCompletion.create(
+    model="gpt-4",
+    messages=[
+        {"role": "user", "content": "Write a one-line SOW objective."}
+    ]
+)
 
-    return response.output_text
-
-output = generate_text("Write a one-line SOW objective.")
-print(output)
+print(response.choices[0].message["content"])
 
 
 # ---------------- SESSION STATE ----------------
