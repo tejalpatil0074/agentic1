@@ -144,6 +144,7 @@ if st.button("✨ Generate SOW Content"):
         st.error("OpenAI API key missing")
     else:
         with st.spinner("Generating content..."):
+            
  # ===== ADDED =====
 st.session_state.customer_logo = customer_logo
 
@@ -316,6 +317,7 @@ with tabs[2]:
             file_name="Statement_of_Work.doc",
             mime="application/msword"
         )
+
 
 
 
